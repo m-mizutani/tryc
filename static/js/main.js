@@ -37,11 +37,12 @@ $(function(){
       let tgt = (f.own === 'src') ?
           ((f.dst_name !== null) ? f.dst_name : f.dst_addr) :
           ((f.src_name !== null) ? f.src_name : f.src_addr);
+      const addr = (f.own === 'src') ? f.dst_addr : f.src_addr;
+      const geo  = (f.own === 'src') ? f.dst_geo  : f.src_geo;
       if (tgt in dns_map) {
-        console.log('replace: ' + tgt + ' -> ' + dns_map[tgt]);
         tgt = dns_map[tgt];
       }
-      return {name: tgt, data: f};
+      return {name: tgt, addr: addr, geo: geo, data: f};
     });
 
     const msg = JSON.parse(arg);
@@ -61,6 +62,8 @@ $(function(){
           init_ts: f.data.init_ts,
           total_size: 0,
           delta_size: 0,
+          addr: f.addr,
+          geo: f.geo,
         };
       }
       const ssn = session_map[f.name];
@@ -79,11 +82,14 @@ $(function(){
     });
 
     const ssn_html = sessions.map(function(ssn) {
-      const duration = (ssn.data.last_ts - ssn.data.init_ts);
-      const bps = Math.floor((ssn.data.total_size / duration) * 100) / 100;
-      return '<div>' + ssn.name + ': ' +
-          ssn.data.delta_size + ' bps ' +
-          '(total ' + bps + ' bps)' +
+      const cc = (ssn.data.geo !== null) ? ssn.data.geo.country : 'unknown';
+
+      return '<div class="session">' +
+          '<img src="static/imgs/flags/' + cc + '.png">' +
+          '<div class="name">' + ssn.name + '</div>' +
+          '<div class="bps">' + ssn.data.delta_size + ' bps</div>' +
+          '<div class="total">(total ' + ssn.data.total_size + ' byte)</div>'+
+          '<div class="clearfx"></div>' +
           '</div>';
     });
 

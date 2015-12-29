@@ -2,6 +2,38 @@ body {
     font-family: "Avenir Next", Verdana, "Hiragino Kaku Gothic Pro", "Yu Gothic", Meiryo, Osaka, sans-serif;
 }
 
-div#flows {
-    
+div.session {
+    padding: 5px;
+    margin: 5px;
+    border: solid 1px #555;
 }
+
+div.session div {
+    font-size: 11px;
+}
+div.session img {
+    float: left; 
+}
+
+div.session div.name {
+    float: left; 
+    width: 300px;
+}
+div.session div.bps {
+    float: left; 
+    width: 100px;
+    text-align: right;
+}
+div.session div.total {
+    float: left; 
+    width: 100px;
+    text-align: right;
+}
+.clearfx {
+    clear: both;
+}
+/*
+div.session div.total:after {
+    clear: both;
+}
+*/

@@ -7,6 +7,7 @@ const BrowserWindow = require('browser-window');
 const electron = require("electron");
 const ipc = electron.ipcMain;
 const path = require('path');
+const geoip = require('geoip-lite');
 
 /*
 const routes = require('netroute').getInfo();
@@ -48,8 +49,9 @@ app.on('window-all-closed', function() {
     app.quit();
 });
 
+const devourer = setup_devourer();
+
 app.on('ready', function() {
-  const devourer = setup_devourer();
   const devourer_stream = new msgpack.Stream(devourer.proc.stdout);
   
   mainWindow = new BrowserWindow({width: 800, height: 600});
@@ -68,8 +70,11 @@ app.on('ready', function() {
   }, 1000);
   
   devourer_stream.addListener('msg', function(msg) {
-    // console.log(msg[0]);
     if (mainWindow !== null) {
+      if (msg[0] === 'flow.new') {
+        msg[2].src_geo = geoip.lookup(msg[2].src_addr);
+        msg[2].dst_geo = geoip.lookup(msg[2].dst_addr);
+      }
       mainWindow.webContents.send(msg[0], JSON.stringify(msg[2]));
     }
   });
