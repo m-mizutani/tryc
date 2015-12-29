@@ -1,4 +1,4 @@
-TRIC: Traffic Reporter of Your Computer
+TRYC: Traffic Reporter of Your Computer
 ============
 
 
