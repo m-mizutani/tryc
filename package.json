@@ -1,0 +1,16 @@
+{
+  "name": "tryc",
+  "version": "0.0.1",
+  "description": "Traffic Reporter of Your Computer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "msgpack": "^1.0.2",
+    "netroute": "^1.0.2"
+  }
+}
